@@ -1,3 +1,5 @@
+require 'ant'
+
 class Board
   attr_reader :grid
   attr_reader :ant
@@ -30,7 +32,7 @@ class Board
   end
 
   def current_color
-    grid[@ant.x, @ant.y]
+    grid[@ant.x][@ant.y]
   end
 
   def size

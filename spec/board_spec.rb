@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'ant'
 require 'board'
 
 describe Board do
@@ -10,7 +9,7 @@ describe Board do
     let(:starting_x) { 0 }
     let(:starting_y) { 0 }
 
-    it 'rejects it' do
+    it 'is rejected' do
       expect { subject }.to raise_error(RangeError)
     end
   end
@@ -20,7 +19,7 @@ describe Board do
     let(:starting_x) { 0 }
     let(:starting_y) { 0 }
 
-    it 'rejects it' do
+    it 'is rejected' do
       expect { subject }.to raise_error(RangeError)
     end
   end
@@ -31,23 +30,23 @@ describe Board do
     let(:starting_y) { 2 }
 
     it 'starts with all white cells' do
-      (0...size).each do |row|
-        (0...size).each do |col|
-          expect(subject.grid[row][col]).to eq(:white)
+      (0...size).each do |x|
+        (0...size).each do |y|
+          expect(subject.grid[x][y]).to eq(:white)
         end
       end
     end
 
-    it 'shows starting ant position' do
+    it 'delegates ant data' do
       expect(subject.ant.x).to eq(2)
       expect(subject.ant.y).to eq(2)
       expect(subject.ant.direction).to eq(:north)
     end
 
-    context 'at the edge of the board' do
-      let(:size) { 1 }
-      let(:starting_x) { 0 }
-      let(:starting_y) { 0 }
+    context 'moving off the edge of the board' do
+      let(:size) { 2 }
+      let(:starting_x) { 1 }
+      let(:starting_y) { 1 }
 
       it 'raises' do
         expect { subject.move! }.to raise_error(RangeError)

@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'ant'
 
 describe Ant do
-  context 'from north' do
+  context 'starting from north' do
     subject { described_class.new(:north, 50, 50) }
 
     it 'turns right when arriving on white' do
