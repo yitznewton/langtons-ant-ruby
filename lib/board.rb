@@ -11,9 +11,10 @@ class Board
   end
 
   def move!
+    starting_x, starting_y = @ant.x, @ant.y
     move_ant!
     fail RangeError if off_the_board?
-    flip_color!
+    flip_color(starting_x, starting_y)
   end
 
   private
@@ -22,8 +23,8 @@ class Board
     @ant.move!(current_color)
   end
 
-  def flip_color!
-    (current_color == :white) ? :black : :white
+  def flip_color(x, y)
+    grid[x][y] = (grid[x][y] == :white) ? :black : :white
   end
 
   def off_the_board?
@@ -40,6 +41,6 @@ class Board
   end
 
   def empty_grid(size)
-    Array.new(size, Array.new(size, :white))
+    Array.new(size) { Array.new(size, :white) }
   end
 end

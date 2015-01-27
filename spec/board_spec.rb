@@ -64,15 +64,39 @@ describe Board do
         expect(subject.ant.direction).to eq(:east)
       end
 
-      context 'twice' do
-        before do
-          subject.move!
-        end
+      it 'updates grid color' do
+        expect(subject.grid[2][2]).to eq(:black)
 
-        it 'advances the ant' do
-          expect(subject.ant.x).to eq(3)
-          expect(subject.ant.y).to eq(1)
-          expect(subject.ant.direction).to eq(:south)
+        (0...size).each do |x|
+          (0...size).each do |y|
+            expect(subject.grid[x][y]).to eq(:white) unless [x, y] == [2, 2]
+          end
+        end
+      end
+    end
+
+    context 'when moving twice' do
+      before do
+        subject.move!
+        subject.move!
+      end
+
+      it 'advances the ant' do
+        expect(subject.ant.x).to eq(3)
+        expect(subject.ant.y).to eq(1)
+        expect(subject.ant.direction).to eq(:south)
+      end
+
+      it 'updates grid color' do
+        expect(subject.grid[2][2]).to eq(:black)
+        expect(subject.grid[3][2]).to eq(:black)
+
+        (0...size).each do |x|
+          (0...size).each do |y|
+            if [x, y] != [2, 2] && [x, y] != [3, 2]
+              expect(subject.grid[x][y]).to eq(:white)
+            end
+          end
         end
       end
     end
