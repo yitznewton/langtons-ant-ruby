@@ -1,9 +1,9 @@
 class Direction
   ALL = {
-    north: 0,
-    east: 1,
-    south: 2,
-    west: 3
+    north: [0, 1],
+    east:  [1, 0],
+    south: [0, -1],
+    west:  [-1, 0]
   }
 
   def initialize(direction_index)
@@ -11,7 +11,11 @@ class Direction
   end
 
   def direction
-    ALL.invert.fetch(@direction_index)
+    ALL.keys.fetch(@direction_index)
+  end
+
+  def delta
+    ALL.values.fetch(@direction_index)
   end
 
   def update!(color)
@@ -24,6 +28,6 @@ class Direction
   end
 
   def self.north
-    new(ALL[:north])
+    new(ALL.keys.index(:north))
   end
 end

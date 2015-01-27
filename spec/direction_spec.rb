@@ -28,5 +28,13 @@ describe Direction do
       expect(subject.update!(:black).direction).to eq(:north)
       expect(subject.update!(:black).direction).to eq(:west)
     end
+
+    it 'returns x-y deltas' do
+      expect(subject.delta).to eq([0, 1])
+      expect(subject.update!(:white).delta).to eq([1, 0])
+      expect(subject.update!(:white).delta).to eq([0, -1])
+      expect(subject.update!(:white).delta).to eq([-1, 0])
+      expect(subject.update!(:white).delta).to eq([0, 1])
+    end
   end
 end
