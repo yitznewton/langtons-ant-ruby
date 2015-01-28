@@ -3,11 +3,15 @@ class Ant
   attr_reader :x
   attr_reader :y
 
-  DIRECTIONS = {
-    north: { dx:  0, dy:  1 },
-    east:  { dx:  1, dy:  0 },
-    south: { dx:  0, dy: -1 },
-    west:  { dx: -1, dy:  0 }
+  CLOCKWISE_DIRECTIONS = [:north, :east, :south, :west]
+
+  Struct.new('Delta', :x, :y)
+
+  DELTAS = {
+    north: Struct::Delta.new(0,  1),
+    east:  Struct::Delta.new(1,  0),
+    south: Struct::Delta.new(0, -1),
+    west:  Struct::Delta.new(-1, 0)
   }
 
   def initialize(direction, starting_x, starting_y)
@@ -18,8 +22,7 @@ class Ant
 
   def move!(color)
     update_direction!(color)
-    @x += DIRECTIONS[@direction][:dx]
-    @y += DIRECTIONS[@direction][:dy]
+    apply_delta!
   end
 
   private
@@ -35,6 +38,11 @@ class Ant
   end
 
   def directions_for(color)
-    color == :white ? DIRECTIONS.keys : DIRECTIONS.keys.reverse
+    color == :white ? CLOCKWISE_DIRECTIONS : CLOCKWISE_DIRECTIONS.reverse
+  end
+
+  def apply_delta!
+    @x += DELTAS.fetch(direction).x
+    @y += DELTAS.fetch(direction).y
   end
 end
