@@ -3,5 +3,5 @@ require 'board'
 require 'console_output'
 
 board = Board.new(5, 2, 2)
-output = ConsoleOutput.new
-output.redraw(board)
+output = ConsoleOutput.new(board)
+output.redraw

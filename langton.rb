@@ -1,9 +1,9 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
 require 'board'
 require 'console_output'
-require 'game'
+require 'runner'
 
-board = Board.new(60, 25, 25)
-output = ConsoleOutput.new
-game = Game.new(board: board, output: output)
-game.start
+board = Board.new(100, 35, 35)
+output = ConsoleOutput.new(board)
+runner = Runner.new(board: board, output: output)
+runner.start

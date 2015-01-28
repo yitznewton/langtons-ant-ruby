@@ -48,13 +48,13 @@ describe Board do
         subject.move!
       end
 
-      context 'at edge of board' do
+      context 'at edge of grid' do
         let(:size) { 2 }
         let(:starting_x) { 1 }
         let(:starting_y) { 1 }
 
-        it 'detects moving off the edge of the board' do
-          expect(subject.off_the_board?).to be true
+        it 'detects moving off the edge of the grid' do
+          expect(subject.off_the_grid?).to be true
         end
       end
 
