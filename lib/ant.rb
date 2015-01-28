@@ -3,7 +3,33 @@ class Ant
   attr_reader :x
   attr_reader :y
 
-  CLOCKWISE_DIRECTIONS = [:north, :east, :south, :west]
+  class CircularArray
+    def initialize(array)
+      @array = array
+    end
+
+    def after(member)
+      fetch(index(member) + 1)
+    end
+
+    def fetch(i)
+      @array.fetch(i % size)
+    end
+
+    def index(member)
+      @array.index(member)
+    end
+
+    def reverse
+      self.class.new(@array.reverse)
+    end
+
+    def size
+      @size ||= @array.size
+    end
+  end
+
+  CLOCKWISE_DIRECTIONS = CircularArray.new([:north, :east, :south, :west])
 
   Struct.new('Delta', :x, :y)
 
@@ -32,9 +58,7 @@ class Ant
   end
 
   def next_direction_for(color)
-    ordered_directions = directions_for(color)
-    i = (ordered_directions.index(direction) + 1) % 4
-    ordered_directions[i]
+    directions_for(color).after(direction)
   end
 
   def directions_for(color)
