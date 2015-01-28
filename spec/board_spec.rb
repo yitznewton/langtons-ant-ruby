@@ -37,25 +37,25 @@ describe Board do
       end
     end
 
-    it 'delegates ant data' do
+    it 'exposes ant data' do
       expect(subject.ant.x).to eq(2)
       expect(subject.ant.y).to eq(2)
       expect(subject.ant.direction).to eq(:north)
     end
 
-    context 'moving off the edge of the board' do
-      let(:size) { 2 }
-      let(:starting_x) { 1 }
-      let(:starting_y) { 1 }
-
-      it 'raises' do
-        expect { subject.move! }.to raise_error(RangeError)
-      end
-    end
-
     context 'when moving' do
       before do
         subject.move!
+      end
+
+      context 'at edge of board' do
+        let(:size) { 2 }
+        let(:starting_x) { 1 }
+        let(:starting_y) { 1 }
+
+        it 'detects moving off the edge of the board' do
+          expect(subject.off_the_board?).to be true
+        end
       end
 
       it 'advances the ant' do
