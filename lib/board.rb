@@ -13,7 +13,7 @@ class Board
   def move!
     starting_x, starting_y = @ant.x, @ant.y
     move_ant!
-    flip_color(starting_x, starting_y) unless off_the_grid?
+    flip_color(starting_x, starting_y)
   end
 
   def off_the_grid?

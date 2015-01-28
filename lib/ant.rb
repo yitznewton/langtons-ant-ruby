@@ -4,10 +4,10 @@ class Ant
   attr_reader :y
 
   DIRECTIONS = {
-    north: { i: 0, dx:  0, dy:  1 },
-    east:  { i: 1, dx:  1, dy:  0 },
-    south: { i: 2, dx:  0, dy: -1 },
-    west:  { i: 3, dx: -1, dy:  0 }
+    north: { dx:  0, dy:  1 },
+    east:  { dx:  1, dy:  0 },
+    south: { dx:  0, dy: -1 },
+    west:  { dx: -1, dy:  0 }
   }
 
   def initialize(direction, starting_x, starting_y)
@@ -25,12 +25,16 @@ class Ant
   private
 
   def update_direction!(color)
-    starting_di = DIRECTIONS[@direction][:i]
-    new_di = (starting_di + color_delta(color)) % 4
-    @direction = DIRECTIONS.select { |_k, v| v[:i] == new_di }.keys.first
+    @direction = next_direction_for(color)
   end
 
-  def color_delta(color)
-    color == :black ? -1 : 1
+  def next_direction_for(color)
+    ordered_directions = directions_for(color)
+    i = (ordered_directions.index(direction) + 1) % 4
+    ordered_directions[i]
+  end
+
+  def directions_for(color)
+    color == :white ? DIRECTIONS.keys : DIRECTIONS.keys.reverse
   end
 end
