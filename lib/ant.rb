@@ -12,16 +12,16 @@ class Ant
       fetch(index(member) + 1)
     end
 
+    def before(member)
+      fetch(index(member) - 1)
+    end
+
     def fetch(i)
       @array.fetch(i % size)
     end
 
     def index(member)
       @array.index(member)
-    end
-
-    def reverse
-      self.class.new(@array.reverse)
     end
 
     def size
@@ -38,6 +38,11 @@ class Ant
     east:  Struct::Delta.new(1,  0),
     south: Struct::Delta.new(0, -1),
     west:  Struct::Delta.new(-1, 0)
+  }
+
+  COLOR_METHODS = {
+    black: :before,
+    white: :after
   }
 
   def initialize(direction, starting_x, starting_y)
@@ -58,11 +63,7 @@ class Ant
   end
 
   def next_direction_for(color)
-    directions_for(color).after(direction)
-  end
-
-  def directions_for(color)
-    color == :white ? CLOCKWISE_DIRECTIONS : CLOCKWISE_DIRECTIONS.reverse
+    CLOCKWISE_DIRECTIONS.send(COLOR_METHODS.fetch(color), @direction)
   end
 
   def apply_delta!
